@@ -6,10 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.mcassignment.data.db.entities.Users
 
-// This builds the database.
+/* This builds the database.
+Kotlin Room framework is used to build the database.
+Room is a complex wrapper around SQLite that utilises data-driven practices.
+Every Room database is composed of three elements:
+- Database
+- Entities
+- DAOs
+
+DAOs are tiny interfaces that connect to the database to access entities. It acts as a translation layer between the database and the tables in the database.
+DAOs contain wrappers around common SQL functions, like "SELECT *", "INSERT", etc...
+*/
 @Database(entities = [Users::class], version = 1)
 abstract class AppDb : RoomDatabase() {
     abstract fun usersDao() : UsersDao // Initialise the Users entity via Data Access Object (DAO)
+    abstract fun questionsDao(): QuestionsDao
 
     companion object {
         @Volatile private var INSTANCE: AppDb? = null // FIrstly initialise the database as mutable NULL object.
