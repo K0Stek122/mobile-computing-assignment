@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 for (user in users) {
                     if (user.email == email && user.password == password) {
                         val intent = Intent(this@MainActivity, MenuActivity::class.java)
+                        intent.putExtra("USER_ID", user.id.toInt()) // Pass the user ID to next activity
                         startActivity(intent)
                     }
                 }
