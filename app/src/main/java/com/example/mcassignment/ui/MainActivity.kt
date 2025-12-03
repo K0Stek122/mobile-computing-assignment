@@ -2,6 +2,7 @@ package com.example.mcassignment.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding.loginNotification.text = text
     }
 
+    // TODO implement with return when {}
     private suspend fun registerUser(email: String, password: String): Boolean {
         if (userExists(email) == 1) {
             setNotificationText("User under this email already exists. Please try a different email or login.")
@@ -50,10 +52,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun loginUser(email: String, password: String): Boolean {
+        val user = withContext(Dispatchers.IO) {
+            dao.findByEmail(email)
+        }
+        return when {
+            user == null -> {
+                withContext(Dispatchers.Main) {
+                    setNotificationText("This email does not exist.")
+                }
+                false
+            }
+            user.password != password -> {
+                withContext(Dispatchers.Main) {
+                    setNotificationText("Incorrect password.")
+                }
+                false
+            }
+
+            else -> {
+                withContext(Dispatchers.Main) {
+                    val intent = Intent(this@MainActivity, MenuActivity::class.java)
+                        .putExtra("USER_ID", user.id)
+                    startActivity(intent)
+                }
+                true
+            }
+        }
+
+        /*
+        OLD IMPLEMENTATION. SLOWER. COMPLEXITY O(N)
         if (userExists(email) == 0) {
             setNotificationText("This email does not exist.")
             return false
         }
+
         lifecycleScope.launch {
             try {
                 val users = dao.getAll()
@@ -69,6 +101,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+         */
     }
 
     private fun inputBoxesEmpty(): Boolean {
@@ -154,7 +187,9 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             lifecycleScope.launch {
-                loginUser(binding.emailInput.text.toString(), binding.passwordInput.text.toString().toString())
+                loginUser(
+                    binding.emailInput.text.toString(),
+                    binding.passwordInput.text.toString())
             }
         }
     }

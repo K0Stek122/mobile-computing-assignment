@@ -2,6 +2,7 @@ package com.example.mcassignment.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mcassignment.databinding.ActivityMenuBinding
@@ -10,7 +11,7 @@ class MenuActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMenuBinding
 
-    private val user_id : Int = intent.getIntExtra("USER_ID", -1)
+    private var userId: Long = -1
 
     private fun questionCountCorrect(): Boolean {
         if (binding.questionCount.text.toString() == "" || binding.questionCount.text.toString().toInt() >= 20) {
@@ -27,24 +28,32 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (user_id == -1) { // Something went terribly wrong
-            throw Exception("This user does not exist. Something went terribly wrong!")
+        userId = intent?.getLongExtra("USER_ID", -1L) ?: -1L
+        /* TODO pass user id to DesignActivity.
+        if (userId == -1L) {
+            Toast.makeText(this, "Missing user ID", Toast.LENGTH_SHORT).show()
+            finish()
+            return
         }
+         */
 
         // START QUIZ
+        // TODO Error if not enough questions in the pool.
         binding.startQuizButton.setOnClickListener {
             if (!questionCountCorrect()) {
                 return@setOnClickListener
             }
             val intent = Intent(this@MenuActivity, GameActivity::class.java)
             intent.putExtra("QUESTION_COUNT", binding.questionCount.text.toString().toInt())
-            intent.putExtra("USER_ID", user_id)
+            intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
         // DESIGN QUESTIONS
         binding.designButton.setOnClickListener {
-            // TODO
+            val intent = Intent(this@MenuActivity, DesignActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }

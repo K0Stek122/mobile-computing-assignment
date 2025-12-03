@@ -13,4 +13,8 @@ interface UsersDao {
     @Query("SELECT * FROM users ORDER BY id DESC") suspend fun getAll(): List<Users>
     @Update suspend fun update(user: Users): Int
     @Delete suspend fun delete(user: Users): Int
+
+    @Query("SELECT COUNT(*) FROM users WHERE email = :email") suspend fun countByEmail(email: String): Int
+
+    @Query("SELECT * FROM users WHERE email = :email LIMIT 1") suspend fun findByEmail(email: String): Users?
 }

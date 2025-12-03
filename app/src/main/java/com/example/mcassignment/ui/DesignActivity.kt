@@ -1,5 +1,6 @@
 package com.example.mcassignment.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.RadioButton
 import androidx.activity.enableEdgeToEdge
@@ -39,15 +40,19 @@ class DesignActivity : AppCompatActivity() {
         binding.submitQuestion.setOnClickListener {
             lifecycleScope.launch {
                 dao.insert(Questions(
-                    question = binding.questionName.toString(),
-                    answer1 = binding.answerA.toString(),
-                    answer2 = binding.answerB.toString(),
-                    answer3 = binding.answerC.toString(),
-                    answer4 = binding.answerD.toString(),
+                    question = binding.questionName.text.toString(),
+                    answer1 = binding.answerA.text.toString(),
+                    answer2 = binding.answerB.text.toString(),
+                    answer3 = binding.answerC.text.toString(),
+                    answer4 = binding.answerD.text.toString(),
                     correctAnswerIndex = binding.answerRadioGroup.checkedRadioButtonId.toInt()))
 
                 clearFields()
             }
+        }
+        binding.returnButton.setOnClickListener {
+            val intent = Intent(this@DesignActivity, MenuActivity::class.java)
+            startActivity(intent)
         }
     }
 }
