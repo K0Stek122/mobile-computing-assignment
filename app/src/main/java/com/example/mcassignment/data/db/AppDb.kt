@@ -19,7 +19,7 @@ Every Room database is composed of three elements:
 DAOs are tiny interfaces that connect to the database to access entities. It acts as a translation layer between the database and the tables in the database.
 DAOs contain wrappers around common SQL functions, like "SELECT *", "INSERT", etc...
 */
-@Database(entities = [Users::class, Questions::class], version = 2)
+@Database(entities = [Users::class, Questions::class], version = 3)
 abstract class AppDb : RoomDatabase() {
     abstract fun usersDao() : UsersDao // Initialise the Users entity via Data Access Object (DAO)
     abstract fun questionsDao(): QuestionsDao

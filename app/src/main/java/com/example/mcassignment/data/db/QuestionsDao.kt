@@ -11,6 +11,8 @@ import com.example.mcassignment.data.db.entities.Questions
 interface QuestionsDao {
     @Insert suspend fun insert(question: Questions): Long
     @Query("SELECT * FROM questions ORDER BY id DESC") suspend fun getAll(): List<Questions>
+
+    @Query("SELECT * FROM questions WHERE difficulty = :difficulty ORDER BY id DESC") suspend fun getAllByDifficulty(difficulty: Int): List<Questions>
     @Update suspend fun update(question: Questions): Int
     @Delete suspend fun delete(question: Questions): Int
 }

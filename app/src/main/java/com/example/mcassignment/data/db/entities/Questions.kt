@@ -11,5 +11,6 @@ data class Questions(
     val answer2: String,
     val answer3: String,
     val answer4: String,
-    val correctAnswerIndex: Int //A = 1, B = 2, C = 3, D = 4
+    val correctAnswerIndex: Int, //A = 1, B = 2, C = 3, D = 4
+    val difficulty: Int //Easy = 1, Medium = 2, Hard = 3
 )

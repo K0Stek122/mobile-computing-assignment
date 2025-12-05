@@ -11,8 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="220dp"
+        android:layout_marginBottom="105dp"
         android:text="Welcome to the quiz"
         android:textSize="38dp"
+        app:layout_constraintBottom_toTopOf="@+id/difficultyRadioGroup"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,9 +33,10 @@
         android:id="@+id/startQuizButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="164dp"
         android:text="Start Quiz"
         app:layout_constraintEnd_toEndOf="@+id/questionCount"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/questionCount"
         app:layout_constraintTop_toBottomOf="@+id/questionCount" />
 
@@ -58,6 +61,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startQuizButton" />
 
+    <RadioGroup
+        android:id="@+id/difficultyRadioGroup"
+        android:layout_width="88dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="211dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quizWelcome">
+
+        <RadioButton
+            android:id="@+id/easyRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Easy" />
+
+        <RadioButton
+            android:id="@+id/mediumRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium" />
+
+        <RadioButton
+            android:id="@+id/hardRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hard" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/designButton"
         android:layout_width="wrap_content"
@@ -66,5 +98,6 @@
         app:layout_constraintEnd_toStartOf="@+id/notificationText"
         app:layout_constraintStart_toStartOf="@+id/notificationText"
         app:layout_constraintTop_toTopOf="@+id/notificationText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

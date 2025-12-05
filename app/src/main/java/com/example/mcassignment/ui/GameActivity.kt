@@ -22,6 +22,7 @@ class GameActivity: AppCompatActivity() {
     private val dao by lazy { db.questionsDao() }
 
     private var questionCount: Int = 5
+    private var difficulty: Int = -1
 
     private val currentQuestionIndex = 1
 
@@ -33,7 +34,7 @@ class GameActivity: AppCompatActivity() {
     private suspend fun getRandomQuestions(count: Int): MutableList<Questions> {
         // By default List is non-mutable, thus we convert it to a Mutable List.
         val questionsList = withContext(Dispatchers.Main) {
-            dao.getAll()
+            dao.getAllByDifficulty(difficulty)
         }.toMutableList()
         val selectedQuestions: MutableList<Questions> = mutableListOf() //Empty List
 
@@ -64,6 +65,7 @@ class GameActivity: AppCompatActivity() {
         setInfoText()
 
         questionCount = intent?.getIntExtra("QUESTION_COUNT", 5) ?: 5
+        difficulty = intent?.getIntExtra("DIFFICULTY_ID", 2)?: 2
         lifecycleScope.launch {
             val questions: MutableList<Questions> = getRandomQuestions(questionCount)
             displayNextQuestion(questions)

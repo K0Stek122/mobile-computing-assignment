@@ -30,6 +30,19 @@ class DesignActivity : AppCompatActivity() {
         binding.answerRadioGroup.clearCheck()
     }
 
+    private fun estimateDifficulty(): Int {
+        val questionLength = binding.questionName.text.toString().length
+        if (questionLength < 10) {
+            return 1 // Difficulty Easy
+        }
+        else if (questionLength < 25) {
+            return 2 // Difficulty Medium
+        }
+        else {
+            return 3 // Difficulty Hard
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,8 +58,9 @@ class DesignActivity : AppCompatActivity() {
                     answer2 = binding.answerB.text.toString(),
                     answer3 = binding.answerC.text.toString(),
                     answer4 = binding.answerD.text.toString(),
-                    correctAnswerIndex = binding.answerRadioGroup.checkedRadioButtonId.toInt()))
-
+                    correctAnswerIndex = binding.answerRadioGroup.checkedRadioButtonId.toInt(),
+                    difficulty = estimateDifficulty()
+                ))
                 clearFields()
             }
         }
